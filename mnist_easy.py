@@ -81,10 +81,10 @@ print("Test data: " + str(len(X_test)))
 
 Layers = [784, 350, 100, 10]
 # Regularization
-lmbda = 0.005
+lmbda = 0.0005
 # Optimization
 opt = 'RMSprop'  # Adagrad RMSprop Adam SGD
-opt_param = {'lr': 0.005,
+opt_param = {'lr': 0.001,
              'eps':'def'}
 # Barch size
 batch_size = 100
@@ -104,12 +104,12 @@ for n in range(1, len(Layers)-1):
     model.add(Dense(nin, activation="sigmoid"
                     , kernel_initializer=RandomNormal(mean=0.0, stddev=stddev, seed=None)
                     , bias_initializer=rand_init
-                    , W_regularizer=tf.keras.regularizers.l1(lmbda)
-                    # , W_regularizer=tf.keras.regularizers.l2(lmbda)
+                    , kernel_regularizer=tf.keras.regularizers.l1(lmbda)
+                    # , kernel_regularizer=tf.keras.regularizers.l2(lmbda)
                     ))
     if (dropout):
         model.add(Dropout(0.5))
-model.add(Dense(10, activation="sigmoid"))
+model.add(Dense(Layers[-1], activation="sigmoid"))
 
 # Компилируем модель
 optimizer = 0
